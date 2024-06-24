@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.*;
 import unibank.service.pilot.entity.User;
 import unibank.service.pilot.service.UserService;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:3000") // Autoriser les requêtes depuis le frontend React
@@ -30,5 +33,12 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Invalid credentials!");
         }
         return ResponseEntity.ok("Login successful");
+    }
+    @GetMapping("/status")
+    public Map<String, String> status() {
+        Map<String, String> response = new HashMap<>();
+        response.put("Service", "unibank.service.pilot");
+        response.put("version", "2.0.0");
+        return response;
     }
 }
