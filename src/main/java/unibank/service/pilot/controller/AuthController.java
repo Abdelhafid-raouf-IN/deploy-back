@@ -6,8 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import unibank.service.pilot.entity.ApiDocs;
+import unibank.service.pilot.entity.ApiEndpoint;
 import unibank.service.pilot.entity.User;
 import unibank.service.pilot.service.ApiDocsService;
+import unibank.service.pilot.service.ApiEndpointService;
 import unibank.service.pilot.service.UserService;
 
 import java.util.HashMap;
@@ -25,6 +27,8 @@ public class AuthController {
     @Autowired
     private ApiDocsService apiDocsService;
 
+    @Autowired
+    private ApiEndpointService apiEndpointService;
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
@@ -56,6 +60,10 @@ public class AuthController {
     public ResponseEntity<ApiDocs> createApiDocs(@RequestBody ApiDocs apiDocs) {
         ApiDocs createdApiDocs = apiDocsService.saveApiDocs(apiDocs);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdApiDocs);
+    }
+    @GetMapping("/endpoints")
+    public List<ApiEndpoint> getAllApiEndpoints() {
+        return apiEndpointService.getAllApiEndpoints();
     }
 
 }
