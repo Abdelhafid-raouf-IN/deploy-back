@@ -1,13 +1,17 @@
 package unibank.service.pilot.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import unibank.service.pilot.entity.ApiDocs;
 import unibank.service.pilot.entity.User;
+import unibank.service.pilot.service.ApiDocsService;
 import unibank.service.pilot.service.UserService;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,6 +22,9 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ApiDocsService apiDocsService;
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
@@ -25,7 +32,6 @@ public class AuthController {
         }
         return ResponseEntity.ok(userService.save(user));
     }
-
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         User foundUser = userService.findByUsername(user.getUsername());
@@ -41,4 +47,15 @@ public class AuthController {
         response.put("version", "2.0.0");
         return response;
     }
+    @GetMapping("/apis")
+    public ResponseEntity<List<ApiDocs>> getAllApiDocs() {
+        List<ApiDocs> apiDocsList = apiDocsService.getAllApiDocs();
+        return ResponseEntity.ok(apiDocsList);
+    }
+    @PostMapping
+    public ResponseEntity<ApiDocs> createApiDocs(@RequestBody ApiDocs apiDocs) {
+        ApiDocs createdApiDocs = apiDocsService.saveApiDocs(apiDocs);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdApiDocs);
+    }
+
 }
