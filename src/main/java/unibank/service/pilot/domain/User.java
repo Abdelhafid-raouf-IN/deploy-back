@@ -1,10 +1,10 @@
-package unibank.service.pilot.entity;
+package unibank.service.pilot.domain;
 
 
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")  // Update the table name
+@Table(name = "users")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

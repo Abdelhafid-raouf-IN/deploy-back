@@ -1,16 +1,18 @@
-package unibank.service.pilot.controller;
+package unibank.service.pilot.adapters.presentation;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import unibank.service.pilot.entity.ApiDocs;
-import unibank.service.pilot.entity.ApiEndpoint;
-import unibank.service.pilot.entity.User;
-import unibank.service.pilot.service.ApiDocsService;
-import unibank.service.pilot.service.ApiEndpointService;
-import unibank.service.pilot.service.UserService;
+import unibank.service.pilot.adapters.persistence.ApiTestResultRepository;
+import unibank.service.pilot.domain.ApiDocs;
+import unibank.service.pilot.domain.ApiEndpoint;
+import unibank.service.pilot.domain.ApiTestResult;
+import unibank.service.pilot.domain.User;
+import unibank.service.pilot.services.ApiDocsService;
+import unibank.service.pilot.services.ApiEndpointService;
+import unibank.service.pilot.services.UserService;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,17 +20,16 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000") // Autoriser les requêtes depuis le frontend React
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
-
     @Autowired
     private UserService userService;
-
     @Autowired
     private ApiDocsService apiDocsService;
-
     @Autowired
     private ApiEndpointService apiEndpointService;
+    @Autowired
+    private ApiTestResultRepository apiTestResultRepository;
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
@@ -47,7 +48,7 @@ public class AuthController {
     @GetMapping("/status")
     public Map<String, String> status() {
         Map<String, String> response = new HashMap<>();
-        response.put("Service", "unibank.service.pilot");
+        response.put("service", "unibank.service.pilot");
         response.put("version", "2.0.0");
         return response;
     }
@@ -64,6 +65,29 @@ public class AuthController {
     @GetMapping("/endpoints")
     public List<ApiEndpoint> getAllApiEndpoints() {
         return apiEndpointService.getAllApiEndpoints();
+    }
+    @PostMapping("/save")
+    public ResponseEntity<String> saveTestResult(@RequestBody ApiTestResult testResult) {
+        try {
+            System.out.println("Received test result: " + testResult.toString());
+            apiTestResultRepository.save(testResult);
+            return ResponseEntity.ok("Test result saved successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Failed to save test result: " + e.getMessage());
+        }
+    }
+    @GetMapping("/results")
+    public ResponseEntity<List<ApiTestResult>> getAllApiTestResults() {
+        try {
+            List<ApiTestResult> testResults = apiTestResultRepository.findAll();
+            if (testResults.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(testResults, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package unibank.service.pilot.entity;
+package unibank.service.pilot.domain;
 import jakarta.persistence.*;
 
 @Entity

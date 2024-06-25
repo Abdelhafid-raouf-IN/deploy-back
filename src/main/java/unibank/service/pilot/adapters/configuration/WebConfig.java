@@ -1,4 +1,4 @@
-package unibank.service.pilot;
+package unibank.service.pilot.adapters.configuration;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
