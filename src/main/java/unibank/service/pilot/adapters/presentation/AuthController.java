@@ -12,6 +12,7 @@ import unibank.service.pilot.domain.ApiTestResult;
 import unibank.service.pilot.domain.User;
 import unibank.service.pilot.services.ApiDocsService;
 import unibank.service.pilot.services.ApiEndpointService;
+import unibank.service.pilot.services.AuthService;
 import unibank.service.pilot.services.UserService;
 
 import java.util.HashMap;
@@ -30,6 +31,8 @@ public class AuthController {
     private ApiEndpointService apiEndpointService;
     @Autowired
     private ApiTestResultRepository apiTestResultRepository;
+    @Autowired
+    private AuthService authService;
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
@@ -87,6 +90,14 @@ public class AuthController {
             return new ResponseEntity<>(testResults, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/token")
+    public String getToken(@RequestParam String environment, @RequestParam String branch) {
+        try {
+            return authService.getToken(environment, branch);
+        } catch (Exception e) {
+            return "Error: " + e.getMessage();
         }
     }
 
