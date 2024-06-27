@@ -17,6 +17,7 @@ import unibank.service.pilot.services.UserService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+/*test-pull*/
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:3000")
