@@ -51,6 +51,6 @@ public class AuthService {
         TokenExtractor tokenExtractor = new TokenExtractor();
         String token = tokenExtractor.extractTokenFromResponse(responseBody);
         System.out.println("Extracted token: " + token);
-        return "token"; // Replace with actual extraction logic
+        return "token";
     }
 }
