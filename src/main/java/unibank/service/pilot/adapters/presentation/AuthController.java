@@ -99,5 +99,8 @@ public class AuthController {
             return "Error: " + e.getMessage();
         }
     }
-
+    /*@GetMapping("/endpoints")
+    public List<ApiEndpoint> getAllApiEndpoints() {
+        return apiEndpointService.getAllApiEndpoints();
+    }*/
 }
