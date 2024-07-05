@@ -14,6 +14,10 @@ public class ApiEndpointService {
     public ApiEndpointService(ApiEndpointRepository apiEndpointRepository) {
         this.apiEndpointRepository = apiEndpointRepository;
     }
+    public ApiEndpoint saveApiEndpoint(ApiEndpoint apiEndpoint) {
+        return apiEndpointRepository.save(apiEndpoint);
+    }
+
     public List<ApiEndpoint> getAllApiEndpoints() {
         return apiEndpointRepository.findAll();
     }

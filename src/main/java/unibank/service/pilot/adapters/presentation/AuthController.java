@@ -6,32 +6,41 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import unibank.service.pilot.adapters.persistence.ApiTestResultRepository;
-import unibank.service.pilot.domain.ApiDocs;
-import unibank.service.pilot.domain.ApiEndpoint;
-import unibank.service.pilot.domain.ApiTestResult;
-import unibank.service.pilot.domain.User;
-import unibank.service.pilot.services.ApiDocsService;
-import unibank.service.pilot.services.ApiEndpointService;
-import unibank.service.pilot.services.AuthService;
-import unibank.service.pilot.services.UserService;
+import unibank.service.pilot.domain.*;
+import unibank.service.pilot.services.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-/*test-pull*/
+
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:3000")
 public class AuthController {
+
     @Autowired
     private UserService userService;
+
     @Autowired
     private ApiDocsService apiDocsService;
+
+
     @Autowired
     private ApiEndpointService apiEndpointService;
+
+
     @Autowired
     private ApiTestResultRepository apiTestResultRepository;
+
+
     @Autowired
     private AuthService authService;
+
+
+    @Autowired
+    private BranchService branchService;
+
+
+
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
@@ -68,6 +77,11 @@ public class AuthController {
     public List<ApiEndpoint> getAllApiEndpoints() {
         return apiEndpointService.getAllApiEndpoints();
     }
+    @PostMapping("/Createendpoints")
+    public ResponseEntity<ApiEndpoint> createApiEndpoint(@RequestBody ApiEndpoint apiEndpoint) {
+        ApiEndpoint createdApiEndpoint = apiEndpointService.saveApiEndpoint(apiEndpoint);
+        return ResponseEntity.status(HttpStatus.CREATED).body(createdApiEndpoint);
+    }
     @PostMapping("/save")
     public ResponseEntity<String> saveTestResult(@RequestBody ApiTestResult testResult) {
         try {
@@ -99,8 +113,8 @@ public class AuthController {
             return "Error: " + e.getMessage();
         }
     }
-    /*@GetMapping("/endpoints")
-    public List<ApiEndpoint> getAllApiEndpoints() {
-        return apiEndpointService.getAllApiEndpoints();
-    }*/
+    @GetMapping("/branch")
+    public List<Branch> getAllBranches() {
+        return branchService.getAllBranches();
+    }
 }

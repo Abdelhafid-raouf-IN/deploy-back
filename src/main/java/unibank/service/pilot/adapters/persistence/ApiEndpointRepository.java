@@ -6,4 +6,6 @@ import unibank.service.pilot.domain.ApiEndpoint;
 
 @Repository
 public interface ApiEndpointRepository extends JpaRepository<ApiEndpoint, Long> {
+    ApiEndpoint findByNameAndUrl(String name, String url);
+
 }
