@@ -1,46 +1,24 @@
 package unibank.service.pilot.adapters.presentation;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import unibank.service.pilot.adapters.persistence.ApiTestResultRepository;
-import unibank.service.pilot.domain.*;
-import unibank.service.pilot.services.*;
-import java.util.HashMap;
+import unibank.service.pilot.domain.User;
+import unibank.service.pilot.services.UserService;
+
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin(origins = "http://localhost:3000")
+@Tag(name = "Authentication", description = "Controller for authentication and API management")
 public class AuthController {
-
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private ApiDocsService apiDocsService;
-
-
-    @Autowired
-    private ApiEndpointService apiEndpointService;
-
-
-    @Autowired
-    private ApiTestResultRepository apiTestResultRepository;
-
-
-    @Autowired
-    private AuthService authService;
-
-
-    @Autowired
-    private BranchService branchService;
-
-
-
+    @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
         if (userService.findByUsername(user.getUsername()) != null) {
@@ -48,6 +26,7 @@ public class AuthController {
         }
         return ResponseEntity.ok(userService.save(user));
     }
+    @Operation(summary = "Login a user")
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User user) {
         User foundUser = userService.findByUsername(user.getUsername());
@@ -56,65 +35,21 @@ public class AuthController {
         }
         return ResponseEntity.ok("Login successful");
     }
-    @GetMapping("/status")
-    public Map<String, String> status() {
-        Map<String, String> response = new HashMap<>();
-        response.put("service", "unibank.service.pilot");
-        response.put("version", "2.0.0");
-        return response;
+    @Operation(summary = "Get all users")
+    @GetMapping("/users")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
-    @GetMapping("/apis")
-    public ResponseEntity<List<ApiDocs>> getAllApiDocs() {
-        List<ApiDocs> apiDocsList = apiDocsService.getAllApiDocs();
-        return ResponseEntity.ok(apiDocsList);
+    @Operation(summary = "Get user by ID")
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable Long id) {
+        User user = userService.getUserById(id);
+        return ResponseEntity.ok(user);
     }
-    @PostMapping
-    public ResponseEntity<ApiDocs> createApiDocs(@RequestBody ApiDocs apiDocs) {
-        ApiDocs createdApiDocs = apiDocsService.saveApiDocs(apiDocs);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdApiDocs);
-    }
-    @GetMapping("/endpoints")
-    public List<ApiEndpoint> getAllApiEndpoints() {
-        return apiEndpointService.getAllApiEndpoints();
-    }
-    @PostMapping("/Createendpoints")
-    public ResponseEntity<ApiEndpoint> createApiEndpoint(@RequestBody ApiEndpoint apiEndpoint) {
-        ApiEndpoint createdApiEndpoint = apiEndpointService.saveApiEndpoint(apiEndpoint);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdApiEndpoint);
-    }
-    @PostMapping("/save")
-    public ResponseEntity<String> saveTestResult(@RequestBody ApiTestResult testResult) {
-        try {
-            System.out.println("Received test result: " + testResult.toString());
-            apiTestResultRepository.save(testResult);
-            return ResponseEntity.ok("Test result saved successfully");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Failed to save test result: " + e.getMessage());
-        }
-    }
-    @GetMapping("/results")
-    public ResponseEntity<List<ApiTestResult>> getAllApiTestResults() {
-        try {
-            List<ApiTestResult> testResults = apiTestResultRepository.findAll();
-            if (testResults.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
-            return new ResponseEntity<>(testResults, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }
-    @GetMapping("/token")
-    public String getToken(@RequestParam String environment, @RequestParam String branch) {
-        try {
-            return authService.getToken(environment, branch);
-        } catch (Exception e) {
-            return "Error: " + e.getMessage();
-        }
-    }
-    @GetMapping("/branch")
-    public List<Branch> getAllBranches() {
-        return branchService.getAllBranches();
+    @Operation(summary = "Delete user by ID")
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
     }
 }
