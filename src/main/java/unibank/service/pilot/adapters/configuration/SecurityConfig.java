@@ -17,6 +17,7 @@ public class SecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -42,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/token/**").permitAll()
                         .requestMatchers("/api/status/**").permitAll()
                         .requestMatchers("/api/branches/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()  // Permettre l'accès aux points de terminaison Actuator
                         .anyRequest().authenticated()
                 );
         return http.build();

@@ -2,7 +2,6 @@ package unibank.service.pilot.adapters.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import unibank.service.pilot.services.AuthService;
 
@@ -12,8 +11,11 @@ import unibank.service.pilot.services.AuthService;
 @Tag(name = "Token", description = "Controller for token generation")
 public class TokenController {
 
-    @Autowired
-    private AuthService authService;
+    private final AuthService authService;
+
+    public TokenController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @Operation(summary = "Get token for a specific environment and branch")
     @GetMapping

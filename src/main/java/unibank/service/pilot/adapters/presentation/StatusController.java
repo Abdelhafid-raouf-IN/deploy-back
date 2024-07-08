@@ -17,7 +17,7 @@ public class StatusController {
     @GetMapping
     public Map<String, String> status() {
         Map<String, String> response = new HashMap<>();
-        response.put("service", "unibank.service.pilot");
+        response.put("service", "unibank.service.testing");
         response.put("version", "2.0.0");
         return response;
     }

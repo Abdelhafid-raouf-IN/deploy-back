@@ -2,7 +2,6 @@ package unibank.service.pilot.adapters.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +18,11 @@ import java.util.Optional;
 @Tag(name = "Documentation", description = "Controller for API documentation management")
 public class ApiDocsController {
 
-    @Autowired
-    private ApiDocsService apiDocsService;
+    private final ApiDocsService apiDocsService;
+
+    public ApiDocsController(ApiDocsService apiDocsService) {
+        this.apiDocsService = apiDocsService;
+    }
 
     @Operation(summary = "Get all API documentation")
     @GetMapping

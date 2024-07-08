@@ -2,7 +2,6 @@ package unibank.service.pilot.adapters.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +16,11 @@ import java.util.List;
 @Tag(name = "Endpoints", description = "Controller for API endpoint management")
 public class ApiEndpointController {
 
-    @Autowired
-    private ApiEndpointService apiEndpointService;
+    private final ApiEndpointService apiEndpointService;
+
+    public ApiEndpointController(ApiEndpointService apiEndpointService) {
+        this.apiEndpointService = apiEndpointService;
+    }
 
     @Operation(summary = "Get all API endpoints")
     @GetMapping

@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import java.time.LocalDateTime;
+
 @Entity
 public class ApiTestResult {
     @Id
@@ -16,8 +18,14 @@ public class ApiTestResult {
     private String status;
     private String responseBody;
     private String responseHeaders;
+    private LocalDateTime startTime;
+    private LocalDateTime stopTime;
+    private long duration;
+    private LocalDateTime localDate;
+    private String environment;
+    private String branch;
 
-    public ApiTestResult(Long id, String apiName, String endpoint, String method, String status, String responseBody, String responseHeaders) {
+    public ApiTestResult(Long id, String apiName, String endpoint, String method, String status, String responseBody, String responseHeaders, LocalDateTime startTime, LocalDateTime stopTime, long duration, LocalDateTime localDate, String environment, String branch) {
         this.id = id;
         this.apiName = apiName;
         this.endpoint = endpoint;
@@ -25,8 +33,13 @@ public class ApiTestResult {
         this.status = status;
         this.responseBody = responseBody;
         this.responseHeaders = responseHeaders;
+        this.startTime = startTime;
+        this.stopTime = stopTime;
+        this.duration = duration;
+        this.localDate = localDate;
+        this.environment = environment;
+        this.branch = branch;
     }
-
     public ApiTestResult() {
     }
     public Long getId() {
@@ -71,5 +84,40 @@ public class ApiTestResult {
     public void setResponseHeaders(String responseHeaders) {
         this.responseHeaders = responseHeaders;
     }
-
+    public LocalDateTime getStartTime() {
+        return startTime;
+    }
+    public void setStartTime(LocalDateTime startTime) {
+        this.startTime = startTime;
+    }
+    public LocalDateTime getLocalDate() {
+        return localDate;
+    }
+    public void setLocalDate(LocalDateTime localDate) {
+        this.localDate = localDate;
+    }
+    public String getEnvironment() {
+        return environment;
+    }
+    public void setEnvironment(String environment) {
+        this.environment = environment;
+    }
+    public String getBranch() {
+        return branch;
+    }
+    public void setBranch(String branch) {
+        this.branch = branch;
+    }
+    public LocalDateTime getStopTime() {
+        return stopTime;
+    }
+    public void setStopTime(LocalDateTime stopTime) {
+        this.stopTime = stopTime;
+    }
+    public long getDuration() {
+        return duration;
+    }
+    public void setDuration(long duration) {
+        this.duration = duration;
+    }
 }

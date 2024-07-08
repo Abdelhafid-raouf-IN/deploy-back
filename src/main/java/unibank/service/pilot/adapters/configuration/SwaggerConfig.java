@@ -21,8 +21,8 @@ public class SwaggerConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("Unibank Service Pilot API")
+                        .title("unibank-service-testing")
                         .version("V2.0.0")
-                        .description("Documentation de l'API pour Unibank Service Pilot"));
+                        .description("Documentation of unibank-service-testing"));
     }
 }

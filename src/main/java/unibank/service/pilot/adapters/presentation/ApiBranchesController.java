@@ -1,7 +1,6 @@
 package unibank.service.pilot.adapters.presentation;
 
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import unibank.service.pilot.domain.Branch;
 import unibank.service.pilot.services.BranchService;
@@ -13,8 +12,11 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "filiale", description = "Controller for API filiale management")
 public class ApiBranchesController {
-    @Autowired
-    private BranchService branchService;
+    private final BranchService branchService;
+
+    public ApiBranchesController(BranchService branchService) {
+        this.branchService = branchService;
+    }
 
     @PostMapping("/save")
     public List<Branch> saveBranches(@RequestBody List<Branch> branches) {

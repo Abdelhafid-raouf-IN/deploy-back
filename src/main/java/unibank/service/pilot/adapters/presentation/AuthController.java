@@ -2,7 +2,6 @@ package unibank.service.pilot.adapters.presentation;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +15,12 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:3000")
 @Tag(name = "Authentication", description = "Controller for authentication and API management")
 public class AuthController {
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public AuthController(UserService userService) {
+        this.userService = userService;
+    }
+
     @Operation(summary = "Register a new user")
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody User user) {
