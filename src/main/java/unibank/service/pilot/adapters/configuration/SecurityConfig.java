@@ -44,6 +44,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/status/**").permitAll()
                         .requestMatchers("/api/branches/**").permitAll()
                         .requestMatchers("/actuator/**").permitAll()  // Permettre l'accès aux points de terminaison Actuator
+                        .requestMatchers("/actuator/metrics/**").permitAll()  // Autoriser l'accès aux métriques
                         .anyRequest().authenticated()
                 );
         return http.build();
