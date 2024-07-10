@@ -27,7 +27,7 @@ publishing {
     repositories {
         maven {
             name = "nexus"
-            setUrl("http://nexus:9091/repository/maven-releases")
+            setUrl("http://nexus:8081/repository/maven-releases")
             allowInsecureProtocol  = true
             credentials {
                 username = System.getenv("ARTIFACTORY_USER")
