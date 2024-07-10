@@ -18,8 +18,6 @@ publishing {
     publications {
         library(MavenPublication) {
             from components.java
-            groupId = 'org.gradle.sample'
-            artifactId = 'library'
             artifact("build/libs/pilot-$version"+".jar") {
                 extension = "jar"
             }
@@ -28,7 +26,7 @@ publishing {
     repositories {
         maven {
             name = "nexus"
-            setUrl("http://localhost:9091/repository/maven-releases/")
+            setUrl("http://nexus:9091/repository/maven-releases/")
             allowInsecureProtocol  = true
             credentials {
                 username = System.getenv("ARTIFACTORY_USER")

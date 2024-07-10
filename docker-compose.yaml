@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  nexus:
+    image: sonatype/nexus3
+    container_name: nexus
+    ports:
+      - "9091:8081"
+    volumes:
+      - nexus-data:/nexus-data
+    restart: unless-stopped
+
+  jenkins:
+    image: jenkins/jenkins:jdk21
+    container_name: jenkins
+    ports:
+      - "8080:8080"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+    restart: unless-stopped
+
+volumes:
+  nexus-data:
+  jenkins_home:
