@@ -18,7 +18,8 @@ publishing {
     publications {
         library(MavenPublication) {
             from components.java
-
+            groupId = 'org.gradle.sample'
+            artifactId = 'library'
             artifact("build/libs/pilot-$version"+".jar") {
                 extension = "jar"
             }
