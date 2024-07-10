@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
+    id 'maven-publish'
+
 }
 
 group = 'unibank.service'
@@ -12,11 +14,31 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+publishing {
+    publications {
+        register<MavenPublication>("maven") {
+            from(components["java"])
 
+            artifact("build/libs/app-$version"+".jar") {
+                extension = "jar"
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "nexus"
+            setUrl("http://localhost:9091/repository/maven-releases/")
+            isAllowInsecureProtocol = true
+            credentials {
+                username = System.getenv("ARTIFACTORY_USER")
+                password = System.getenv("ARTIFACTORY_PASSWORD")
+            }
+        }
+    }
+}
 repositories {
     mavenCentral()
 }
-
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -32,11 +54,6 @@ dependencies {
 
     //autoRun
     developmentOnly("org.springframework.boot:spring-boot-devtools")
-
-
-
-
-
 
 }
 

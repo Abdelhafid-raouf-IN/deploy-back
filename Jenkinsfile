@@ -11,7 +11,17 @@ pipeline {
                 sh 'cd ./build/libs && ls -l'
             }
         }
+        stage('Publish') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]){
+                    sh """
+                        gradle publish
+                    """
+                }
+            }
+        }
     }
+
 
 
 }
