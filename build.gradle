@@ -21,35 +21,13 @@ publishing {
             artifact("build/libs/pilot-$version"+".jar") {
                 extension = "jar"
             }
-            pom {
-                name.set("My Application")
-                description.set("A description of my application")
-                url.set("http://example.com/my-application")
-                licenses {
-                    license {
-                        name.set("Apache 2.0 License")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.html")
-                    }
-                }
-                developers {
-                    developer {
-                        id.set("myid")
-                        name.set("My Name")
-                        email.set("myemail@example.com")
-                    }
-                }
-                scm {
-                    connection.set("scm:git:git://github.com/myorg/myrepo.git")
-                    developerConnection.set("scm:git:ssh://github.com/myorg/myrepo.git")
-                    url.set("https://github.com/myorg/myrepo")
-                }
-            }
+
         }
     }
     repositories {
         maven {
             name = "nexus"
-            setUrl("http://nexus:9091/repository/maven-releases/")
+            setUrl("http://nexus:9091/repository/maven-releases")
             allowInsecureProtocol  = true
             credentials {
                 username = System.getenv("ARTIFACTORY_USER")
