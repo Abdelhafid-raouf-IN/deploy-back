@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Build') {
             steps {
-                sh './gradlew assemble'
+                sh './gradlew build  '
             }
         }
         stage('Publish') {
