@@ -13,7 +13,6 @@ public class MetricsController {
     public MetricsController(MetricsEndpoint metricsEndpoint) {
         this.metricsEndpoint = metricsEndpoint;
     }
-
     @GetMapping
     public ResponseEntity<Object> getMetrics() {
         Object metrics = metricsEndpoint.listNames();
@@ -24,5 +23,7 @@ public class MetricsController {
         Object metricDetails = metricsEndpoint.metric(name, null);
         return ResponseEntity.ok(metricDetails);
     }
+
+
 
 }
