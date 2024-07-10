@@ -1,43 +1,32 @@
 pipeline {
     agent any
 
-    tools {
-        jdk 'JDK21'
-        gradle 'Gradle'
-    }
-
     stages {
-        stage('Checkout') {
+        stage('Checkout Backend') {
             steps {
                 git 'https://github.com/Abdelhafid-raouf-IN/deploy-back.git'
             }
         }
-
-        stage('Build') {
+        stage('Build Backend') {
             steps {
-                sh './gradlew clean build'
+                dir('backend') {
+                    sh './gradlew clean build'
+                }
             }
         }
-
-        stage('Test') {
+        stage('Archive Backend Artifacts') {
             steps {
-                sh './gradlew test'
-            }
-        }
-
-        stage('Deploy') {
-            steps {
-                echo 'Déploiement en cours...'
+                archiveArtifacts artifacts: 'deploy-back/build/libs/*.jar', allowEmptyArchive: true
             }
         }
     }
 
     post {
         success {
-            echo 'Build et tests réussis !'
+            echo 'Backend Build Success!'
         }
         failure {
-            echo 'Le build ou les tests ont échoué.'
+            echo 'Backend Build Failed!'
         }
     }
 }
