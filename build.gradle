@@ -22,30 +22,26 @@ publishing {
                 extension = "jar"
             }
             pom {
-                name = 'My Library'
-                description = 'A concise description of my library'
-                url = 'http://www.example.com/library'
-                properties = [
-                        myProp: "value",
-                        "prop.with.dots": "anotherValue"
-                ]
+                name.set("My Application")
+                description.set("A description of my application")
+                url.set("http://example.com/my-application")
                 licenses {
                     license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                        name.set("Apache 2.0 License")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.html")
                     }
                 }
                 developers {
                     developer {
-                        id = 'johnd'
-                        name = 'John Doe'
-                        email = 'john.doe@example.com'
+                        id.set("myid")
+                        name.set("My Name")
+                        email.set("myemail@example.com")
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://example.com/my-library.git'
-                    developerConnection = 'scm:git:ssh://example.com/my-library.git'
-                    url = 'http://example.com/my-library/'
+                    connection.set("scm:git:git://github.com/myorg/myrepo.git")
+                    developerConnection.set("scm:git:ssh://github.com/myorg/myrepo.git")
+                    url.set("https://github.com/myorg/myrepo")
                 }
             }
         }
