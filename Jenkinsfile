@@ -3,7 +3,7 @@ pipeline {
     environment {
         NEXUS_URL = 'http://localhost:9091/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
-        JAVA_HOME = '/path/to/java21'  // Add this line to set JAVA_HOME
+        JAVA_HOME = 'C:/Program Files/JAVA/jdk-21.0.2'  // Add this line to set JAVA_HOME
         PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
     stages {
