@@ -21,4 +21,8 @@ services:
 
 volumes:
   nexus-data:
+    external: true
+    name: nexus-data
   jenkins_home:
+    external: true
+    name: jenkins_home
