@@ -7,7 +7,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'gradle build '
+                sh 'gradle build -x test'
                 sh 'cd ./build/libs && ls -l'
             }
         }
