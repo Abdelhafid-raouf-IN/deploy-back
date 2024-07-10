@@ -1,22 +1,32 @@
 pipeline {
     agent any
-
+    environment {
+        NEXUS_URL = 'http://localhost:9091/repository/maven-releases/'
+        NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
+    }
     stages {
-        stage('Checkout Backend') {
+        stage('Checkout') {
             steps {
-                git 'https://github.com/Abdelhafid-raouf-IN/deploy-back.git'
+                checkout scm
             }
         }
-        stage('Build Backend') {
+        stage('Build') {
             steps {
-                dir('backend') {
-                    sh './gradlew clean build'
+                sh './gradlew assemble'
+            }
+        }
+        stage('Publish') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
+                    sh './gradlew publish -PnexusUsername=$NEXUS_USER -PnexusPassword=$NEXUS_PASSWORD'
                 }
             }
         }
-        stage('Archive Backend Artifacts') {
+        stage('Push to Nexus') {
             steps {
-                archiveArtifacts artifacts: 'deploy-back/build/libs/*.jar', allowEmptyArchive: true
+                withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
+                    sh 'curl -u $NEXUS_USER:$NEXUS_PASSWORD --upload-file build/libs/pilot-0.0.1-SNAPSHOT.jar $NEXUS_URL/your-artifact.jar'
+                }
             }
         }
     }
