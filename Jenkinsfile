@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        NEXUS_URL = 'http://localhost:9091/repository/maven-releases/'
+        NEXUS_URL = 'http://localhost:8081/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
     }
     stages {
