@@ -8,6 +8,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                sh 'chmod +x gradlew'
+
             }
         }
         stage('Build') {
