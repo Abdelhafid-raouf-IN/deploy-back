@@ -3,13 +3,14 @@ pipeline {
     environment {
         NEXUS_URL = 'http://localhost:9091/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
+        JAVA_HOME = '/path/to/java21'  // Add this line to set JAVA_HOME
+        PATH = "${JAVA_HOME}/bin:${env.PATH}"
     }
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
                 sh 'chmod +x gradlew'
-
             }
         }
         stage('Build') {
@@ -32,7 +33,6 @@ pipeline {
             }
         }
     }
-
     post {
         success {
             echo 'Backend Build Success!'
