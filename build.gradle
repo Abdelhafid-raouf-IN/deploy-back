@@ -16,10 +16,10 @@ java {
 }
 publishing {
     publications {
-        register<MavenPublication>("maven") {
-            from(components["java"])
+        library(MavenPublication) {
+            from components.java
 
-            artifact("build/libs/app-$version"+".jar") {
+            artifact("build/libs/pilot-$version"+".jar") {
                 extension = "jar"
             }
         }
@@ -28,7 +28,7 @@ publishing {
         maven {
             name = "nexus"
             setUrl("http://localhost:9091/repository/maven-releases/")
-            isAllowInsecureProtocol = true
+            allowInsecureProtocol  = true
             credentials {
                 username = System.getenv("ARTIFACTORY_USER")
                 password = System.getenv("ARTIFACTORY_PASSWORD")
