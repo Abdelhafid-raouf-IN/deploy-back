@@ -14,12 +14,11 @@ pipeline {
             }
         }
         stage('Publish') {
-            steps {
-                // Publier les artefacts construits dans Nexus
-                withCredentials([usernamePassword(credentialsId: "${NEXUS_CREDENTIALS_ID}", usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]){
-                    sh """
-                        gradle publish -PnexusUrl=${NEXUS_URL} -PnexusUsername=${NEXUS_USER} -PnexusPassword=${NEXUS_PASSWORD}
-                    """
+                    steps {
+                        withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]){
+                            sh """
+                                gradle publish
+                            """
                 }
             }
         }
