@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        NEXUS_URL = 'http://localhost:8081/repository/maven-releases/'
+        NEXUS_URL = 'http://localhost:9091/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
         VEGETA_VERSION = '12.0.1' // Spécifiez la version de Vegeta que vous souhaitez utiliser
     }
@@ -37,7 +37,7 @@ pipeline {
             steps {
                 // Exécuter les tests de charge avec Vegeta
                 sh """
-                echo "POST http://localhost:9090/api/endpoint" > targets.txt
+                echo "POST http://localhost:9090/api/endpoint" > requests.txt
                 vegeta attack -duration=30s -rate=10 -targets=src/main/java/unibank/service/pilot/vegeta/requests.txt | vegeta report
                 """
             }
@@ -46,10 +46,10 @@ pipeline {
             steps {
                 // Publier les résultats du test
                 sh """
-                vegeta report -type=text > results.txt
-                cat results.txt
+                vegeta report -type=text > requests.txt
+                cat requests.txt
                 """
-                archiveArtifacts artifacts: 'results.txt', allowEmptyArchive: true
+                archiveArtifacts artifacts: 'requests.txt', allowEmptyArchive: true
             }
         }
         stage('Notify Results') {
