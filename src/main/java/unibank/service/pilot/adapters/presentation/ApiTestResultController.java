@@ -36,7 +36,7 @@ public class ApiTestResultController {
         }
     }
     @Operation(summary = "Save API test result")
-    @PostMapping("/save")
+    @PostMapping("/save" )
     public ResponseEntity<String> saveTestResult(@RequestBody ApiTestResult testResult) {
         try {
             System.out.println("Received test result: " + testResult.toString());

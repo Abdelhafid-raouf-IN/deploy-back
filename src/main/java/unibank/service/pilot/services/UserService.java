@@ -35,4 +35,16 @@ public class UserService {
         User user = getUserById(id);
         userRepository.delete(user);
     }
+
+    public User updateUser(Long id, User userDetails) {
+        User existingUser = userRepository.findById(id).orElse(null);
+        if (existingUser == null) {
+            return null;
+        }
+        existingUser.setUsername(userDetails.getUsername());
+        if (userDetails.getPassword() != null && !userDetails.getPassword().isEmpty()) {
+            existingUser.setPassword(new BCryptPasswordEncoder().encode(userDetails.getPassword()));
+        }
+        return userRepository.save(existingUser);
+    }
 }

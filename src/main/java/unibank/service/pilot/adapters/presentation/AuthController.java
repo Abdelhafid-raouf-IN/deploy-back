@@ -55,4 +55,13 @@ public class AuthController {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();
     }
+    @Operation(summary = "Update user by ID")
+    @PutMapping("/users/{id}")
+    public ResponseEntity<User> updateUser(@PathVariable Long id, @RequestBody User userDetails) {
+        User updatedUser = userService.updateUser(id, userDetails);
+        if (updatedUser == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(updatedUser);
+    }
 }
