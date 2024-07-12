@@ -1,21 +1,11 @@
 pipeline {
     agent any
-
     environment {
-        // Définir les variables d'environnement pour Nexus
         NEXUS_URL = 'http://localhost:8081/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
         VEGETA_VERSION = '12.0.1' // Spécifiez la version de Vegeta que vous souhaitez utiliser
     }
-
     stages {
-        stage('Checkout') {
-            steps {
-                // Cloner le dépôt contenant le code source
-                git 'https://votre-depot-git.com/votre-repository.git'
-            }
-        }
-
         stage('Build') {
             steps {
                 // Construire le projet avec Gradle, en excluant les tests
@@ -23,7 +13,6 @@ pipeline {
                 sh 'cd ./build/libs && ls -l'
             }
         }
-
         stage('Publish') {
             steps {
                 // Publier les artefacts construits dans Nexus
@@ -34,7 +23,6 @@ pipeline {
                 }
             }
         }
-
         stage('Install Vegeta') {
             steps {
                 // Télécharger et installer Vegeta
@@ -45,16 +33,15 @@ pipeline {
                 """
             }
         }
-
         stage('Run Load Test') {
             steps {
                 // Exécuter les tests de charge avec Vegeta
                 sh """
+                echo "POST http://localhost:9090/api/endpoint" > targets.txt
                 vegeta attack -duration=30s -rate=10 -targets=src/main/java/unibank/service/pilot/vegeta/requests.txt | vegeta report
                 """
             }
         }
-
         stage('Publish Test Results') {
             steps {
                 // Publier les résultats du test
@@ -65,7 +52,6 @@ pipeline {
                 archiveArtifacts artifacts: 'results.txt', allowEmptyArchive: true
             }
         }
-
         stage('Notify Results') {
             steps {
                 // Envoyer des notifications par email en cas de succès ou d'échec des tests
