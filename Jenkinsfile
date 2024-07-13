@@ -11,9 +11,16 @@ pipeline {
                 sh 'cd ./build/libs && ls -l'
             }
         }
-        stage('Verify Vegeta Installation') {
+        stage('Install Vegeta') {
             steps {
-                sh 'vegeta --version'
+                sh '''
+                # Télécharger et installer Vegeta
+                wget https://github.com/vegeta/vegeta/releases/download/v12.0.0/vegeta_12.0.0_linux_amd64.tar.gz
+                tar -xvf vegeta_12.0.0_linux_amd64.tar.gz
+                sudo mv vegeta /usr/local/bin/
+                # Vérifier l'installation
+                vegeta --version
+                '''
             }
         }
         stage('Prepare Targets') {
