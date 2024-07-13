@@ -1,9 +1,0 @@
-GET http://192.168.10.49:9090/api/tests/results
-GET http://192.168.10.49:9090/api/branches
-GET http://192.168.10.49:9090/api/endpoints/1
-GET http://192.168.10.49:9090/api/endpoints
-GET http://192.168.10.49:9090/api/status
-GET http://192.168.10.49:9090/api/auth/users/1
-GET http://192.168.10.49:9090/api/auth/users
-GET http://192.168.10.49:9090/api/docs/1
-GET http://192.168.10.49:9090/api/docs
