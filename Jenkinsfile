@@ -7,13 +7,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                bat 'gradle build -x test'
-                bat 'cd ./build/libs && dir'
+                sh 'gradle build -x test'
+                sh 'cd ./build/libs && ls -l'
             }
         }
         stage('Load Test') {
             steps {
-                bat 'call attack.bat'
+                sh 'chmod +x attack.sh'
+                sh './attack.sh'
             }
         }
         /*stage('Publish') {
@@ -25,5 +26,16 @@ pipeline {
                 }
             }
         }*/
+    }
+    post {
+        always {
+            // Archive the test results
+            archiveArtifacts artifacts: 'results.json, plot.html', allowEmptyArchive: true
+            publishHTML (target: [
+                reportName : 'Vegeta Load Test Report',
+                reportDir  : '.',
+                reportFiles: 'plot.html'
+            ])
+        }
     }
 }
