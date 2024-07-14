@@ -26,15 +26,4 @@ pipeline {
             }
         }*/
     }
-    post {
-        always {
-            // Archive the test results
-            archiveArtifacts artifacts: 'results.json, plot.html', allowEmptyArchive: true
-            publishHTML (target: [
-                reportName : 'Vegeta Load Test Report',
-                reportDir  : '.',
-                reportFiles: 'plot.html'
-            ])
-        }
-    }
 }
