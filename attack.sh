@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Execute the load test
-cat targets.txt | vegeta attack -duration=30s -rate=50 | tee results.bin | vegeta report
-
-# Generate the JSON report
-vegeta report -inputs=results.bin -reporter=json > results.json
-
-# Generate the HTML plot
-vegeta report -inputs=results.bin -reporter=plot > plot.html
+vegeta attack -rate=50 -duration=30s -targets=targets.txt > results.bin
+vegeta report results.bin# Generate the HTML plot
+vegeta plot results.bin > plot.html
