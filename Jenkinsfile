@@ -3,6 +3,7 @@ pipeline {
     environment {
         NEXUS_URL = 'http://localhost:8081/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
+        ACTUATOR_URL = 'http://192.168.1.117:9090/actuator'
     }
     stages {
         stage('Build') {
@@ -18,6 +19,24 @@ pipeline {
                 sh 'ls -l plot.html'
             }
         }
+        stage('Health Check') {
+            steps {
+                script {
+                    def healthResponse = sh(script: "curl -s ${ACTUATOR_URL}/health", returnStdout: true).trim()
+                    echo "Health Check Response:"
+                    echo "${healthResponse}"
+                }
+            }
+        }
+        stage('Metrics') {
+            steps {
+                script {
+                    def metricsResponse = sh(script: "curl -s ${ACTUATOR_URL}/metrics", returnStdout: true).trim()
+                    echo "Metrics Response:"
+                    echo "${metricsResponse}"
+                }
+            }
+        }
         /*stage('Publish') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]){
@@ -29,15 +48,15 @@ pipeline {
         }*/
     }
     post {
-            always {
-                archiveArtifacts artifacts: 'results.json, plot.html', allowEmptyArchive: true
-                publishHTML (target: [
-                    reportName : 'Vegeta Load Test Report',
-                    reportDir  : '.',
-                    reportFiles: 'plot.html',
-                    keepAll    : true,
-                    alwaysLinkToLastBuild: true
-                ])
-            }
+        always {
+            archiveArtifacts artifacts: 'results.json, plot.html', allowEmptyArchive: true
+            publishHTML (target: [
+                reportName : 'Vegeta Load Test Report',
+                reportDir  : '.',
+                reportFiles: 'plot.html',
+                keepAll    : true,
+                alwaysLinkToLastBuild: true
+            ])
         }
+    }
 }
