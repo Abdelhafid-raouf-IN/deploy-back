@@ -17,7 +17,6 @@ pipeline {
                 sh 'chmod +x attack.sh'
                 sh './attack.sh'
                 sh 'ls -l plot.html'  // Vérifie que plot.html est bien présent
-                sh 'cat plot.html'  // Affiche le contenu du fichier plot.html pour vérification
             }
         }
         stage('Health Check') {
