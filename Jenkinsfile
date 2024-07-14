@@ -15,6 +15,7 @@ pipeline {
             steps {
                 sh 'chmod +x attack.sh'
                 sh './attack.sh'
+                sh 'ls -l plot.html'
             }
         }
         /*stage('Publish') {
@@ -28,13 +29,15 @@ pipeline {
         }*/
     }
     post {
-        always {
-            archiveArtifacts artifacts: 'results.json, plot.html', allowEmptyArchive: true
-            publishHTML (target: [
-                reportName : 'Vegeta Load Test Report',
-                reportDir  : '.',
-                reportFiles: 'plot.html'
-            ])
+            always {
+                archiveArtifacts artifacts: 'results.json, plot.html', allowEmptyArchive: true
+                publishHTML (target: [
+                    reportName : 'Vegeta Load Test Report',
+                    reportDir  : '.',
+                    reportFiles: 'plot.html',
+                    keepAll    : true,
+                    alwaysLinkToLastBuild: true
+                ])
+            }
         }
-    }
 }
