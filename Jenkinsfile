@@ -25,7 +25,8 @@ pipeline {
 
         stage('Copy Report') {
             steps {
-                sh 'cp plot.html /var/jenkins_home/job/unibank.service.testing/lastSuccessfulBuild/artifact/plot.html'
+                sh 'mkdir -p /var/jenkins_home/workspace/unibank.service.testing/lastSuccessfulBuild/artifact/'
+                sh 'cp plot.html /var/jenkins_home/workspace/unibank.service.testing/lastSuccessfulBuild/artifact/plot.html'
             }
         }
         stage('Health Check') {
@@ -68,5 +69,4 @@ pipeline {
             ])
         }
     }
-
 }
