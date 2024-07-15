@@ -4,11 +4,13 @@ pipeline {
         NEXUS_URL = 'http://localhost:9091/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
         ACTUATOR_URL = 'http://192.168.10.165:9090/actuator'
+        GRADLE_HOME = '/opt/gradle/latest'
+        PATH = "${env.GRADLE_HOME}/bin:${env.PATH}"
     }
     stages {
         stage('Build') {
             steps {
-                sh '/opt/gradle/latest/bin/gradle build -x test'
+                sh 'gradle build -x test'
                 sh 'cd ./build/libs && ls -l'
             }
         }
@@ -50,9 +52,7 @@ pipeline {
         stage('Publish') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]){
-                    sh """
-                        /opt/gradle/latest/bin/gradle publish
-                    """
+                    sh 'gradle publish'
                 }
             }
         }
