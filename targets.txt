@@ -2,10 +2,10 @@
 GET http://192.168.10.165:9090/api/tests/results
 
 #BRANCES
-GET 192.168.10.165/api/branches
+GET http://192.168.10.165:9090/api/branches
 Content-Type: application/json
 
-POST 192.168.10.165/api/branches/save
+POST http://192.168.10.165:9090/api/branches/save
 Content-Type: application/json
 
 [
