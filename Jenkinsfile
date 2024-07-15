@@ -3,7 +3,7 @@ pipeline {
     environment {
         NEXUS_URL = 'http://localhost:8081/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
-        ACTUATOR_URL = 'http://192.168.1.117:9090/actuator'
+        ACTUATOR_URL = 'http://192.168.10.165:9090/actuator'
     }
     stages {
         stage('Build') {
