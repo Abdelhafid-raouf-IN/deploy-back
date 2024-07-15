@@ -6,11 +6,6 @@ pipeline {
         ACTUATOR_URL = 'http://192.168.10.165:9090/actuator'
     }
     stages {
-        stage('Check Vegeta') {
-            steps {
-                sh 'vegeta -version'
-            }
-        }
         stage('Build') {
             steps {
                 sh 'gradle build -x test'
@@ -22,7 +17,6 @@ pipeline {
                 sh 'chmod +x attack.sh'
                 sh './attack.sh'
                 sh 'ls -l plot.html'  // Vérifie que plot.html est bien présent
-                sh 'ls -l plot.png'   // Vérifie que plot.png est bien présent
             }
         }
         stage('Health Check') {
@@ -43,7 +37,7 @@ pipeline {
                 }
             }
         }
-        /*stage('Publish') {
+        stage('Publish') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]){
                     sh """
@@ -51,22 +45,15 @@ pipeline {
                     """
                 }
             }
-        }*/
+        }
     }
     post {
         always {
-            archiveArtifacts artifacts: 'results.json, plot.html, plot.png', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'results.json, plot.html', allowEmptyArchive: true
             publishHTML (target: [
                 reportName : 'Vegeta Load Test Report',
                 reportDir  : '.',
                 reportFiles: 'plot.html',
-                keepAll    : true,
-                alwaysLinkToLastBuild: true
-            ])
-            publishHTML (target: [
-                reportName : 'Vegeta Load Test Graph',
-                reportDir  : '.',
-                reportFiles: 'plot.png',
                 keepAll    : true,
                 alwaysLinkToLastBuild: true
             ])
