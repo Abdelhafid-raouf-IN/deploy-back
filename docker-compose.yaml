@@ -17,6 +17,17 @@ services:
       - "8080:8080"
     volumes:
       - jenkins_home:/var/jenkins_home
+      - ./shared-volume:/home/jenkins
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - "8081:80"
+    volumes:
+      - ./shared-volume:/home/nginx/report # Monte le répertoire des artefacts Jenkins dans NGINX
+      - ./nginx.conf:/etc/nginx/nginx.conf  # Fichier de configuration NGINX
     restart: unless-stopped
 
 volumes:
