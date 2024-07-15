@@ -1,57 +1,8 @@
-# API Test Results
 GET http://192.168.10.165:9090/api/tests/results
-
-# Branches
-GET http://192.168.10.165:9090/api/branches
-
-POST http://192.168.10.165:9090/api/branches/save
-Content-Type: application/json
-{"id":"10","code":"MAR","name":"MAR-MAROC (SGMA)"}
-
-# Endpoints
-GET http://192.168.10.165:9090/api/endpoints/10
-
-PUT http://192.168.10.165:9090/api/endpoints/10
-Content-Type: application/json
-{"id":10,"name":"string","url":"string","environment":"string"}
-
-DELETE http://192.168.10.165:9090/api/endpoints/10
-
-POST http://192.168.10.165:9090/api/endpoints/create
-Content-Type: application/json
-{"id":10,"name":"string","url":"string","environment":"string"}
-
+GET http://192.168.10.165:9090/api/endpoints/1
 GET http://192.168.10.165:9090/api/endpoints
-
-# Health Check
 GET http://192.168.10.165:9090/api/status
-
-# Authentication
-GET http://192.168.10.165:9090/api/auth/users/10
-
-PUT http://192.168.10.165:9090/api/auth/users/10
-Content-Type: application/json
-{"id":10,"username":"hafid","password":"1589"}
-
-DELETE http://192.168.10.165:9090/api/auth/users/10
-
-POST http://192.168.10.165:9090/api/auth/register
-Content-Type: application/json
-{"id":10,"username":"raouf","password":"raouf"}
-
-POST http://192.168.10.165:9090/api/auth/login
-Content-Type: application/json
-{"id":10,"username":"raouf","password":"raouf"}
-
+GET http://192.168.10.165:9090/api/auth/users/1
 GET http://192.168.10.165:9090/api/auth/users
-
-# Documentation
-GET http://192.168.10.165:9090/api/docs/10
-
-DELETE http://192.168.10.165:9090/api/docs/10
-
+GET http://192.168.10.165:9090/api/docs/1
 GET http://192.168.10.165:9090/api/docs
-
-POST http://192.168.10.165:9090/api/docs
-Content-Type: application/json
-{"id":10,"name":"string","url":"string","baseUrl":"string"}
