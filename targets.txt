@@ -17,23 +17,10 @@ Content-Type: application/json
 ]
 
 #ENDPOINTS
-GET http://localhost:9090/api/endpoints/1
+GET http://192.168.10.165:9090/api/endpoints/1
 Content-Type: application/json
 
-PUT http://localhost:9090/api/endpoints/1
-Content-Type: application/json
-
-{
-  "id": 1,
-  "name": "string",
-  "url": "string",
-  "environment": "string"
-}
-
-DELETE http://localhost:9090/api/endpoints/1
-Content-Type: application/json
-
-POST http://localhost:9090/api/endpoints/create
+PUT http://192.168.10.165:9090/api/endpoints/1
 Content-Type: application/json
 
 {
@@ -43,16 +30,29 @@ Content-Type: application/json
   "environment": "string"
 }
 
-GET http://localhost:9090/api/endpoints
+DELETE http://192.168.10.165:9090/api/endpoints/1
+Content-Type: application/json
+
+POST http://192.168.10.165:9090/api/endpoints/create
+Content-Type: application/json
+
+{
+  "id": 1,
+  "name": "string",
+  "url": "string",
+  "environment": "string"
+}
+
+GET http://192.168.10.165:9090/api/endpoints
 
 #HEALTHCHECK
-GET http://localhost:9090/api/status
+GET http://192.168.10.165:9090/api/status
 
 #AUTHENTICATION
-GET http://localhost:9090/api/auth/users/1
+GET http://192.168.10.165:9090/api/auth/users/1
 Content-Type: application/json
 
-PUT http://localhost:9090/api/auth/users/1
+PUT http://192.168.10.165:9090/api/auth/users/1
 Content-Type: application/json
 
 {
@@ -61,19 +61,10 @@ Content-Type: application/json
   "password": "1589"
 }
 
-DELETE http://localhost:9090/api/auth/users/2
+DELETE http://192.168.10.165:9090/api/auth/users/2
 Content-Type: application/json
 
-POST http://localhost:9090/api/auth/register
-Content-Type: application/json
-
-{
-  "id": 2,
-  "username": "raouf",
-  "password": "raouf"
-}
-
-POST http://localhost:9090/api/auth/login
+POST http://192.168.10.165:9090/api/auth/register
 Content-Type: application/json
 
 {
@@ -82,19 +73,28 @@ Content-Type: application/json
   "password": "raouf"
 }
 
-GET http://localhost:9090/api/auth/users
+POST http://192.168.10.165:9090/api/auth/login
+Content-Type: application/json
+
+{
+  "id": 2,
+  "username": "raouf",
+  "password": "raouf"
+}
+
+GET http://192.168.10.165:9090/api/auth/users
 
 #DOCUMENTATION
-GET http://localhost:9090/api/docs/2
+GET http://192.168.10.165:9090/api/docs/2
 Content-Type: application/json
 
-DELETE http://localhost:9090/api/docs/2
+DELETE http://192.168.10.165:9090/api/docs/2
 Content-Type: application/json
 
-GET http://localhost:9090/api/docs
+GET http://192.168.10.165:9090/api/docs
 Content-Type: application/json
 
-POST http://localhost:9090/api/docs
+POST http://192.168.10.165:9090/api/docs
 Content-Type: application/json
 
 {
