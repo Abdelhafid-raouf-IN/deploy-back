@@ -51,7 +51,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]){
                     sh """
-                        gradle publish
+                        /opt/gradle/latest/bin/gradle publish
                     """
                 }
             }
