@@ -1,5 +1,5 @@
 GET http://192.168.10.165:9090/api/tests/results
-GET http://192.168.10.165:9090/api/endpoints/1
+GET http://192.168.10.165:9090/api/endpoints/2
 GET http://192.168.10.165:9090/api/endpoints
 GET http://192.168.10.165:9090/api/status
 GET http://192.168.10.165:9090/api/auth/users/1
