@@ -3,7 +3,6 @@ plugins {
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
     id 'maven-publish'
-
 }
 
 group = 'unibank.service'
@@ -14,21 +13,21 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
+
 publishing {
     publications {
         library(MavenPublication) {
             from components.java
-            artifact("build/libs/pilot-$version"+".jar") {
+            artifact("build/libs/pilot-${version}.jar") {
                 extension = "jar"
             }
-
         }
     }
     repositories {
         maven {
             name = "nexus"
-            setUrl("http://nexus:8081/repository/maven-releases")
-            allowInsecureProtocol  = true
+            url = uri("http://nexus:8081/repository/maven-releases")
+            allowInsecureProtocol = true
             credentials {
                 username = System.getenv("ARTIFACTORY_USER")
                 password = System.getenv("ARTIFACTORY_PASSWORD")
@@ -36,9 +35,11 @@ publishing {
         }
     }
 }
+
 repositories {
     mavenCentral()
 }
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
@@ -46,15 +47,10 @@ dependencies {
     runtimeOnly 'org.postgresql:postgresql'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
-    implementation("com.fasterxml.jackson.core:jackson-core:2.17.1")
-    implementation ("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0")
+    implementation "com.fasterxml.jackson.core:jackson-core:2.17.1"
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-
-
-    //autoRun
-    developmentOnly("org.springframework.boot:spring-boot-devtools")
-
-
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 }
 
 tasks.named('test') {
