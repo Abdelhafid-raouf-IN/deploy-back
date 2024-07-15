@@ -19,7 +19,6 @@ pipeline {
                 sh 'ls -l plot.html'
                 sh 'cp plot.html /home/jenkins/${BUILD_NUMBER}.html'
                 sh 'ls -l /home/jenkins'
-                sh 'echo http://localhost:9092/report/${BUILD_NUMBER}.html'
             }
         }
 
