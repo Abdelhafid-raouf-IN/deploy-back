@@ -17,11 +17,12 @@ pipeline {
                 sh 'chmod +x attack.sh'
                 sh './attack.sh'
                 sh 'ls -l plot.html'
-                sh "mv plot.html /home/jenkins/$BUILD_NUMBER.html"
-                sh "ls -l /home/jenkins"
-                sh "echo http://localhost:9092/report/$BUILD_NUMBER.html"
+                sh 'cp plot.html /home/jenkins/${BUILD_NUMBER}.html'
+                sh 'ls -l /home/jenkins'
+                sh 'echo http://localhost:9092/report/${BUILD_NUMBER}.html'
             }
         }
+
         stage('Copy Report') {
             steps {
                 sh 'cp plot.html /var/jenkins_home/job/unibank.service.testing/lastSuccessfulBuild/artifact/plot.html'  // Copier plot.html vers le répertoire d’artefacts Jenkins
