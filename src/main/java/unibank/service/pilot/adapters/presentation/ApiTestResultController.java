@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/tests")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @Tag(name = "Test-Result", description = "Controller for API test result management")
 public class ApiTestResultController {
 

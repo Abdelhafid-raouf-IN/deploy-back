@@ -12,7 +12,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @Tag(name = "Authentication", description = "Controller for authentication and API management")
 public class AuthController {
     private final UserService userService;

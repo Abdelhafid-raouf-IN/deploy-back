@@ -7,7 +7,7 @@ import unibank.service.pilot.services.AuthService;
 
 @RestController
 @RequestMapping("/api/token")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @Tag(name = "Token", description = "Controller for token generation")
 public class TokenController {
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/branches")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "http://localhost:3001")
 @Tag(name = "filiale", description = "Controller for API filiale management")
 public class ApiBranchesController {
     private final BranchService branchService;
