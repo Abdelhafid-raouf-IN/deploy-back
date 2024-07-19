@@ -57,16 +57,4 @@ pipeline {
             }
         }
     }
-    post {
-        always {
-            archiveArtifacts artifacts: 'results.json, plot.html', allowEmptyArchive: true
-            publishHTML (target: [
-                reportName : 'Vegeta Load Test Report',
-                reportDir  : '.',
-                reportFiles: 'plot.html',
-                keepAll    : true,
-                alwaysLinkToLastBuild: true
-            ])
-        }
-    }
 }
