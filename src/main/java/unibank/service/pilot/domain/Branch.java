@@ -13,7 +13,7 @@ public class Branch {
     private Long id;
     private String code;
     private String name;
-    public Branch(Long id, String code, String name) {
+    public Branch(Long id, String code) {
         this.id = id;
         this.code = code;
         this.name = name;
