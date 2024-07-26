@@ -17,7 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'chmod +x gradlew'
-                sh 'gradle build -x test'
+                sh './gradlew build -x test'
                 sh 'cd ./build/libs && ls -l'
             }
         }
