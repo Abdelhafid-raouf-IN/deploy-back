@@ -6,8 +6,17 @@ pipeline {
         ACTUATOR_URL = 'http://192.168.10.193:9090/actuator'
     }
     stages {
+    stage('Verify') {
+                steps {
+                    script {
+                        sh 'pwd'
+                        sh 'ls -l'
+                    }
+                }
+            }
         stage('Build') {
             steps {
+                sh 'chmod +x gradlew'
                 sh 'gradle build -x test'
                 sh 'cd ./build/libs && ls -l'
             }
