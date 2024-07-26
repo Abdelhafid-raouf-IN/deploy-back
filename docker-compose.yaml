@@ -17,6 +17,7 @@ services:
       - "8080:8080"
     volumes:
       - jenkins_home:/var/jenkins_home
+      - gradle_volume:/opt/gradle
       - ./shared-volume:/home/jenkins
     restart: unless-stopped
 
@@ -37,3 +38,6 @@ volumes:
   jenkins_home:
     external: true
     name: jenkins_home
+  gradle_volume:
+    external: true
+    name: gradle_volume
