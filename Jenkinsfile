@@ -74,6 +74,6 @@ pipeline {
                         Check console output at ${env.BUILD_URL} to view the results.
                         """
                     )
-             }}}
+             }}
     }
 }
