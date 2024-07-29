@@ -66,7 +66,7 @@ pipeline {
     post {
         always {
             emailext(
-                to: 'abdelhafidraoufe@gmail.com',
+                to: 'abdelhafidraoufpfe@gmail.com',
                 subject: "Pipeline ${currentBuild.fullDisplayName} - Status: ${currentBuild.currentResult}",
                 body: """
                     Build: ${currentBuild.fullDisplayName}
