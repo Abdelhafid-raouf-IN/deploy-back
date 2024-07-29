@@ -6,14 +6,14 @@ pipeline {
         ACTUATOR_URL = 'http://172.29.192.1:9090/actuator'
     }
     stages {
-        stage('Verify') {
-            steps {
-                script {
-                    sh 'pwd'
-                    sh 'ls -l'
+    stage('Verify') {
+                steps {
+                    script {
+                        sh 'pwd'
+                        sh 'ls -l'
+                    }
                 }
             }
-        }
         stage('Build') {
             steps {
                 sh 'chmod +x gradlew'
@@ -31,6 +31,7 @@ pipeline {
                 sh 'echo http://localhost:9092/report/${BUILD_NUMBER}.html'
             }
         }
+
         stage('Copy Report') {
             steps {
                 sh 'mkdir -p /var/jenkins_home/workspace/unibank.service.testing/lastSuccessfulBuild/artifact/'
@@ -57,23 +58,10 @@ pipeline {
         }
         stage('Publish') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'nexus-credentials-id', usernameVariable: 'ARTIFACTORY_USER', passwordVariable: 'ARTIFACTORY_PASSWORD')]){
                     sh './gradlew publish'
                 }
             }
-        }
-    }
-    post {
-        always {
-            emailext(
-                to: 'abdelhafidraoufpfe@gmail.com',
-                subject: "Pipeline ${currentBuild.fullDisplayName} - Status: ${currentBuild.currentResult}",
-                body: """
-                    Build: ${currentBuild.fullDisplayName}
-                    Status: ${currentBuild.currentResult}
-                    Check console output at ${env.BUILD_URL} to view the results.
-                """
-            )
         }
     }
 }
