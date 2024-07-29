@@ -63,5 +63,18 @@ pipeline {
                 }
             }
         }
+        post {
+                always {
+                    emailext (
+                        to: 'abdelhafidraoufe@gmail.com',
+                        subject: "Pipeline ${currentBuild.fullDisplayName} - Status: ${currentBuild.currentResult}",
+                        body: """
+                        Build: ${currentBuild.fullDisplayName}
+                        Status: ${currentBuild.currentResult}
+                        Check console output at ${env.BUILD_URL} to view the results.
+                        """
+                    )
+                }
+            }
     }
 }
