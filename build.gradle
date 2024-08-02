@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '3.3.1'
     id 'io.spring.dependency-management' version '1.1.5'
     id 'maven-publish'
+    id "org.sonarqube" version "4.0.0.2929"
 
 }
 
@@ -39,6 +40,14 @@ publishing {
 repositories {
     mavenCentral()
 }
+sonarqube {
+    properties {
+        property "sonar.projectKey", "unibank.service.testing"
+        property "sonar.host.url", "http://localhost:7075"
+        property "sonar.login", "squ_02506a832b8d148460c29293c54ba90577ccb04b"
+    }
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-security'
