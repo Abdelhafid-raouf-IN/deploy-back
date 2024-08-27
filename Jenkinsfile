@@ -21,22 +21,22 @@ pipeline {
                 sh 'cd ./build/libs && ls -l'
             }
         }
-        stage('Load Test') {
-            steps {
-                sh 'chmod +x attack.sh'
-                sh './attack.sh'
-                sh 'ls -l plot.html'
-                sh 'cp plot.html /home/jenkins/${BUILD_NUMBER}.html'
-                sh 'ls -l /home/jenkins'
-                sh 'echo http://172.29.192.1:9092/report/${BUILD_NUMBER}.html'
-            }
-        }
-        stage('Copy Report') {
-            steps {
-                sh 'mkdir -p /var/jenkins_home/workspace/unibank.service.testing/lastSuccessfulBuild/artifact/'
-                sh 'cp plot.html /var/jenkins_home/workspace/unibank.service.testing/lastSuccessfulBuild/artifact/plot.html'
-            }
-        }
+//         stage('Load Test') {
+//             steps {
+//                 sh 'chmod +x attack.sh'
+//                 sh './attack.sh'
+//                 sh 'ls -l plot.html'
+//                 sh 'cp plot.html /home/jenkins/${BUILD_NUMBER}.html'
+//                 sh 'ls -l /home/jenkins'
+//                 sh 'echo http://172.29.192.1:9092/report/${BUILD_NUMBER}.html'
+//             }
+//         }
+//         stage('Copy Report') {
+//             steps {
+//                 sh 'mkdir -p /var/jenkins_home/workspace/unibank.service.testing/lastSuccessfulBuild/artifact/'
+//                 sh 'cp plot.html /var/jenkins_home/workspace/unibank.service.testing/lastSuccessfulBuild/artifact/plot.html'
+//             }
+//         }
         stage('Health Check') {
             steps {
                 script {
