@@ -6,11 +6,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class TokenExtractor {
 
     private final ObjectMapper objectMapper;
-
     public TokenExtractor() {
         this.objectMapper = new ObjectMapper();
     }
-
     public String extractTokenFromResponse(String responseBody) {
         try {
             JsonNode rootNode = objectMapper.readTree(responseBody);

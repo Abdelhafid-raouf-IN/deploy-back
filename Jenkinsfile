@@ -3,10 +3,10 @@ pipeline {
     environment {
         NEXUS_URL = 'http://localhost:9091/repository/maven-releases/'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials-id'
-        ACTUATOR_URL = 'http://172.29.192.1:9090/actuator'
+        ACTUATOR_URL = 'http://192.168.10.230:9090/actuator'
     }
     stages {
-    stage('Verify') {
+        stage('Verify') {
                 steps {
                     script {
                         sh 'pwd'
@@ -15,7 +15,7 @@ pipeline {
                 }
             }
         stage('Build') {
-            steps {
+            steps { 
                 sh 'chmod +x gradlew'
                 sh './gradlew build -x test'
                 sh 'cd ./build/libs && ls -l'
@@ -31,7 +31,6 @@ pipeline {
                 sh 'echo http://172.29.192.1:9092/report/${BUILD_NUMBER}.html'
             }
         }
-
         stage('Copy Report') {
             steps {
                 sh 'mkdir -p /var/jenkins_home/workspace/unibank.service.testing/lastSuccessfulBuild/artifact/'

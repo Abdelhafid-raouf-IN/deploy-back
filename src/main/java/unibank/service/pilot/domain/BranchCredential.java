@@ -10,7 +10,7 @@ public class BranchCredential {
     private Long id;
     @Column(name = "auth_url")
     private String authUrl;
-    @Column(name = "\"authorization\"") // Quote the column name
+    @Column(name = "\"authorization\"")
     private String authorization;
     @Column(name = "branch")
     private String branch;
@@ -35,8 +35,7 @@ public class BranchCredential {
         this.grantType = grantType;
         this.authUrl = authUrl;
     }
-    public BranchCredential() {
-    }
+    public BranchCredential() {}
     public Long getId() {
         return id;
     }

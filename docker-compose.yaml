@@ -31,6 +31,27 @@ services:
       - ./nginx.conf:/etc/nginx/nginx.conf
     restart: unless-stopped
 
+  postgres:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: unibankbackend
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  backend:
+      build: .
+      depends_on:
+        - postgres
+      environment:
+        SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/unibankbackend
+        SPRING_DATASOURCE_USERNAME: postgres
+        SPRING_DATASOURCE_PASSWORD: root
+      ports:
+        - "9090:9090"
+
 volumes:
   nexus-data:
     external: true
@@ -41,3 +62,6 @@ volumes:
   gradle_volume:
     external: true
     name: gradle_volume
+  postgres_data:
+
+
