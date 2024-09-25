@@ -17,7 +17,6 @@ public class SecurityConfig {
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -31,7 +30,6 @@ public class SecurityConfig {
                     config.addAllowedMethod("DELETE");
                     config.addAllowedMethod("PATCH");
                     config.addAllowedHeader("*");
-                    config.setAllowCredentials(true);
                     return config;
                 }))
                 .authorizeHttpRequests(authorize -> authorize

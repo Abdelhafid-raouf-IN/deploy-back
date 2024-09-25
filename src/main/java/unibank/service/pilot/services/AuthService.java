@@ -40,7 +40,6 @@ public class AuthService {
 
             ResponseEntity<String> response = restTemplate.exchange(authUrl, HttpMethod.POST, entity, String.class);
 
-            // Assuming the response contains the token in a JSON object with key 'access_token'
             String token = extractTokenFromResponse(response.getBody());
             return token;
         } else {
